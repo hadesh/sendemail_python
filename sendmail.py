@@ -63,7 +63,7 @@ def build_message(mailfrom, mailto, subject, content, attachment):
 	msg['Mime-Version'] = '1.0'
 	msg['From']    = "%s<%s>" % (Header("zhang三疯", "utf-8"), mailfrom)
 	msg['To']      = "%s<%s>" % (Header("xiao龙女", "utf-8"), mailto)
-	msg['Subject'] = subject
+	msg['Subject'] = Header(subject, "utf-8")
 	msg['Date']    = email.Utils.formatdate()
 	msg.attach(MIMEText(content, _subtype = "plain", _charset = "utf-8"))
 
