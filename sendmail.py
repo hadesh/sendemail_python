@@ -3,6 +3,7 @@
 import smtplib
 import email
 import mimetypes
+import os.path
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -37,10 +38,8 @@ def build_attachment(filename):
 	if len(filename) == 0:
 		return None
 
-	print "attachment ---"
-	filename = unicode(filename,"utf-8")
-	print (filename)
-
+	# print (filename)
+	showname = os.path.basename(filename)
 	fd = file(filename, "rb")
 	mimetype, mimeencoding = mimetypes.guess_type(filename)
 	if mimeencoding or (mimetype is None):
@@ -54,8 +53,8 @@ def build_attachment(filename):
 		retval.set_payload(fd.read())
 		email.encoders.encode_base64(retval)
 	# fix:when the attachment name is Chinese
-	retval.add_header("Content-Disposition","attachment",filename = filename.encode("gb2312"))
-
+	showname = unicode(showname,"utf-8").encode("gb2312")
+	retval.add_header("Content-Disposition","attachment",filename = showname)
 	fd.close()
 	return retval
 
